@@ -21,11 +21,13 @@ export default function Home(props: HomeProps) {
 
 export async function getStaticProps() {
 
-    const appData = await api.get('/appData').then(response => response.data);
+    const appData = await api.get('/appData')
+                            .then(response => response.data)
+                            .catch(error => console.log(error));
 
     return {
         props: {
-            appData: appData
+            appData: appData ?? {}
         }
     }
 }

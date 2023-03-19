@@ -20,11 +20,11 @@ export function Basket(props: BasketProps) {
     const [show, setShow] = useState(false);
     const [displayAnimate, setDisplayAnimate] = useState(false);
 
-    const basketTotal = props.data.items.reduce((total, item) => {
+    const basketTotal = props.data?.items.reduce((total, item) => {
         return total + (item.price * item.quantity);
     }, 0);
 
-    const basketVAT = props.data.items.reduce((total, item) => {
+    const basketVAT = props.data?.items.reduce((total, item) => {
         return total + ((item.price * item.quantity) * 0.2);
     }, 0);
 
@@ -60,7 +60,7 @@ export function Basket(props: BasketProps) {
                     </div>
                     <div className={styles.basketList}>
                         
-                        { props.data.items.map((item, key) => (
+                        { props.data?.items.map((item, key) => (
                             <div key={key} className={styles.basketItem}>
                                 <div className={styles.basketItemImg}>
                                     {

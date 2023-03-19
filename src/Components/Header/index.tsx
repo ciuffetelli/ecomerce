@@ -25,7 +25,7 @@ export function Header(props: HeaderProps) {
     const basketRef = useRef<BasketElement>(null);
     const sideMenuRef = useRef<SideMenuElement>(null);
 
-    const basketTotal = props.basketData.items.reduce((total, item) => {
+    const basketTotal = props.basketData?.items.reduce((total, item) => {
         return total + (item.price * item.quantity);
     }, 0);
 
@@ -53,7 +53,7 @@ export function Header(props: HeaderProps) {
                         <span onClick={handleShowSeachClick}>
                             { !showSearch ? <AiOutlineSearch /> : <AiOutlineClose />}
                         </span>
-                        <ShoppingCard onClick={handleShoppingCardClick} badge={props.basketData.items.length} />
+                        <ShoppingCard onClick={handleShoppingCardClick} badge={props.basketData?.items.length} />
                         <AiOutlineMenu onClick={handleSideMenuClick} />
                     </div>
                     <div className={styles.actionDesktop}>
