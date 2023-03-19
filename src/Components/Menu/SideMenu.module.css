@@ -56,11 +56,16 @@
     height: 4rem;
 }
 
-.menu {
+.menuContainer {
     flex: 1;
     border-top: solid 1px rgb(var(--foreground-rgb) / 10%);
     margin: 1rem 0 0 0;
+    padding: 1rem 0.75rem;
     font-family: "Rajdhani";
+}
+
+.menu {
+    text-transform: capitalize;
 }
 
 .menu > ul {
@@ -84,9 +89,12 @@
     display: inline-flex;
     width: 100%;
     color: rgb(var(--foreground-rgb) / 80%);
+    font-size: 0.9rem;
+    font-weight: 600;
     justify-content: space-between;
     align-items: center;
     text-decoration: none;
+    font-family: "Rubik", sans-serif;
     transition: var(--transition);
 }
 
@@ -94,11 +102,26 @@
     transition: var(--transition);
 }
 
+.menuItemChildrenContainer {
+    display: none;
+    width: 100%;
+}
+
 .menuItemChildren {
-    height: 0;
     padding: 0.5rem 0 0 0.5rem;
     overflow: hidden;
     transition: var(--transition);
+}
+
+.menuItemImage {
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+}
+
+.menuItemChildren .menuItemTitle {
+    font-size: 0.8rem;
+    font-weight: 400;
 }
 
 .menuItemHead[data-toggle="true"] > .menuItemTitle {
@@ -109,9 +132,13 @@
     transform: rotate(180deg);
 }
 
-.menuItemHead[data-toggle="true"] > .menuItemChildren {
-    height: auto;
-    border-left: 1px solid rgb(var(--foreground-rgb) / 10%);
+.menuItemHead[data-toggle="true"] > .menuItemChildrenContainer {
+    display: block;
+}
+
+.menuItemChildren:is([data-type="images"]) .menuItemTitle {
+    justify-content: flex-start;
+    gap: 0.5rem;
 }
 
 .user {
@@ -145,4 +172,10 @@
     background: var(--primary);
     color: var(--background);
     cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {   
+    .loginButton {
+        color: var(--foreground);
+    }
 }

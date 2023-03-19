@@ -62,7 +62,7 @@
 .basketItem {
     display: flex;
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     border-top: solid 1px rgb(var(--foreground-rgb) / 10%);
 }
@@ -80,6 +80,7 @@
 
 .basketItemInfo {
     display: flex;
+    flex: 1;
     flex-direction: column;
 }
 
@@ -151,4 +152,13 @@
     background: var(--primary);
     color: var(--background);
     cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {  
+    .basketResume {
+        box-shadow: none;
+    } 
+    .basketActionButton {
+        color: var(--foreground);
+    }
 }

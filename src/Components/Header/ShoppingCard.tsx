@@ -2,11 +2,15 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 import styles from './Header.module.css';
 
-export function ShoppingCard({ ...props }) {
+type ShoppingCardProps = {
+    badge?: number
+    onClick?: () => void
+}
+export function ShoppingCard(props: ShoppingCardProps) {
     return (
         <div className={styles.shoppingCard} {...props}>
             <AiOutlineShoppingCart />
-            <span className={styles.shoppingCardBadge}>3</span>
+            { props.badge && props.badge > 0 && <span className={styles.shoppingCardBadge}>{ props.badge }</span> }
         </div>
     )
 }
