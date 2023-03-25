@@ -1,0 +1,50 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateX(100%);
+    transition: var(--transition);
+}
+
+.active {
+    transform: translateX(0);
+}
+
+.controls {
+    position: absolute;
+    display: flex;
+    top: 0;
+    z-index: 100;
+    height: 100%;
+    font-size: 2rem;
+    align-items: center;
+    opacity: 0;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.controlLeft {
+    left: 0;
+    padding-left: 1rem;
+    transform: translateX(-100%);
+}
+
+.controlRight {
+    right: 0;
+    padding-right: 1rem;
+    transform: translateX(100%);
+}
+
+.container:is([data-hover="true"]) .controlLeft, .container:is([data-hover="true"]) .controlRight {
+    opacity: 0.6;
+    transform: translateX(0);
+}

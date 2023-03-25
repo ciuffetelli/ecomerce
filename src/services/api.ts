@@ -1,5 +1,5 @@
 import axios from "axios";
 
-axios.defaults.baseURL = `${process.env.BASE_URL}/api`;
+axios.defaults.baseURL = `${process.env.BASE_URL ?? ''}/api`;
 
 export const api = axios
