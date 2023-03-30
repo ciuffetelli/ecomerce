@@ -18,7 +18,7 @@ export function Hero(props: HeroProps) {
             item?.type === 'video' ? 
                 <></> 
             : 
-                <Image key={index} src={item.source} alt={item.alt} priority={index === 0} />
+                <Image key={index} src={item.source} alt={item.alt} style={{width: '100%'}} priority={index === 0} />
         ))
     }
 

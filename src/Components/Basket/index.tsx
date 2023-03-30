@@ -1,10 +1,10 @@
 import { ForwardedRef, useImperativeHandle, useState } from "react"
-import Image from "next/image";
 
 import styles from "./Basket.module.css"
 
 import { AiOutlineClose, AiOutlineDelete } from 'react-icons/ai';
 
+import { Image } from '@/Components/Image';
 import { Basket as BasketType } from '@/Components/Basket/@types';
 
 export type BasketElement = {

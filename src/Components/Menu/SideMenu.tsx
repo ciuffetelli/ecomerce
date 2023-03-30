@@ -1,10 +1,10 @@
 import { ForwardedRef, useImperativeHandle, useState } from "react"
-import Image from "next/image";
 
 import styles from "./SideMenu.module.css"
 
 import { AiOutlineClose } from 'react-icons/ai';
 
+import { Image } from '@/Components/Image'
 import { Builder } from "./helpers";
 import { MenuType } from "./@types";
 

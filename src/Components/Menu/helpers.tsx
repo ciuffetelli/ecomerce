@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 
 import { MenuType, MenuTypeTypes } from "./@types";
 
+import { Image } from '@/Components/Image';
 import stylesMainMenu from './Menu.module.css';
 import stylesSideMenu from './SideMenu.module.css';
 
