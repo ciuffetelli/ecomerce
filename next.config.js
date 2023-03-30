@@ -3,7 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ['fakestoreapi.com', 'ik.imagekit.io'],
-  }
+    minimumCacheTTL: 60,
+  },
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false };
+
+    return config;
+  },
 }
 
 module.exports = nextConfig

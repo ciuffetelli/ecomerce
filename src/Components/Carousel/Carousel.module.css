@@ -1,7 +1,10 @@
 .container {
     position: relative;
+    display: flex;
     width: 100%;
+    max-width: 100vw;
     height: 100%;
+    margin: auto;
     overflow: hidden;
 }
 
@@ -44,7 +47,24 @@
     transform: translateX(100%);
 }
 
-.container:is([data-hover="true"]) .controlLeft, .container:is([data-hover="true"]) .controlRight {
+.container:hover .controlLeft, .container:hover .controlRight {
     opacity: 0.6;
     transform: translateX(0);
+}
+
+.infiniteContainer {
+    display: flex;
+}
+
+.infiniteContent {
+    display: flex;
+    position: relative;
+    width: fit-content;
+    flex-wrap: nowrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.infinitContentChild {
+    transition: var(--transition);
 }

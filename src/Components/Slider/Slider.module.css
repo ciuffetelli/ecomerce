@@ -1,0 +1,61 @@
+.container {
+    min-width: 100%;
+    padding: 5rem 0px;
+}
+
+.container a {
+    text-decoration: none;
+    color: var(--primary-text);
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+}
+
+.imageContainer {
+    width: 10rem;
+    height: 10rem;
+    margin: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.imageContainer::after {
+    content: "";
+    display: flex;
+    width: 0.25rem;
+    height: 2rem;
+    margin: auto;
+    background: var(--primary);
+}
+
+.item:hover .imageContainer {
+    opacity: 0.5;
+}
+
+.title { 
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.buttonView {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10rem;
+    height: 10rem;
+    padding: 2rem;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    opacity: 0;
+    transform: rotate(90deg);
+    color: var(--primary);   
+    transition: var(--transition);
+}
+
+.item:hover .buttonView {
+    opacity: 1;
+}

@@ -7,19 +7,7 @@ import { AppData } from '@types'
 import { menu } from '@/mocks/menu.data'
 
 import { Basket } from '@/Components/Basket/@types'
-
-type FakeStoreApiProductType = {
-  id: number
-  title: string
-  price: number
-  description: string
-  category: string
-  image: string
-  rating: {
-    rate: number
-    count: number
-  }
-}
+import { FakeStoreApiProductType } from '@types'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<AppData>) {
   
@@ -74,6 +62,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   res.status(200).json({
     menu, 
-    basket
+    basket,
+    categories: responseCategories,
+    products: responseProducts
   })
 }

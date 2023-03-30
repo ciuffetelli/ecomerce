@@ -34,7 +34,6 @@ export const recursiveMenuMap = (styles: any, menu?: MenuType, level?: string) =
         const href = menu[key].href;
         const image = menu[key].image;
         const newLevel = level ? `${level}-${key}` : key;
-        // const isMain = level?.search('main') !== -1;
         const type: MenuTypeTypes = menu[key].type ?? 'dropdown';
         
         const children = menu[key].children;

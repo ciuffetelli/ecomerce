@@ -1,0 +1,44 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 57px 10px;
+    justify-content: space-around;
+    gap: 1rem;
+    backdrop-filter: brightness(0.5);
+}
+
+.item {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item .icon {
+    flex: 1;
+    font-size: 2.5rem;
+}
+
+.item .text {
+    flex: 1;
+    font-weight: 500;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row;
+    }
+    .item {
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0;
+    }
+    .item .icon {
+        flex: unset;
+    }
+    .item .text {
+        flex: unset;
+    }
+}

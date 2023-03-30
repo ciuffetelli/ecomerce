@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { Image } from '@/Components/Image'
 
 import { Hero } from './@types'
 import styles from './Hero.module.css'
@@ -18,7 +18,7 @@ export function Hero(props: HeroProps) {
             item?.type === 'video' ? 
                 <></> 
             : 
-                <Image key={index} src={item.source} alt={item.alt} fill priority={index === 0} />
+                <Image key={index} src={item.source} alt={item.alt} priority={index === 0} />
         ))
     }
 
