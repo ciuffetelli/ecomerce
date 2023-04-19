@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
     --primary: #1b2d5e;
     --primary-rgb: 27 45 94;
