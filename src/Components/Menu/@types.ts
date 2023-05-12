@@ -1,10 +1,11 @@
-export type MenuTypeTypes = 'images' | 'category' | 'dropdown'
+export type MenuType = 'images' | 'category' | 'dropdown' | 'loading'
 
-export type MenuType = {
-    [key: string]: {
-        type?: MenuTypeTypes
-        href?: string
-        image?: string
-        children?: MenuType
-    }
+export type MenuItem = {
+    title: string
+    type?: MenuType
+    url?: string
+    image?: string
+    children?: MenuItem[]
 }
+
+export type Menu = MenuItem[]

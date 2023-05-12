@@ -1,76 +1,57 @@
-import { ForwardedRef, useImperativeHandle, useState } from "react"
+import React, { useRef, useImperativeHandle } from 'react';
+import Link from 'next/link';
+import { Image } from '@/Components/Image';
 
-import styles from "./SideMenu.module.css"
+import { useApp } from '@/hooks/useApp';
 
-import { AiOutlineClose } from 'react-icons/ai';
+import { SideModal, SideModalElement } from '../Modal/SideModal';
+import { ButtonDark } from '../ButtonDark';
 
-import { Image } from '@/Components/Image'
-import { Builder } from "./helpers";
-import { MenuType } from "./@types";
-
-export type SideMenuElement = {
-    show: () => void
-}
+export type SideMenuElement = SideModalElement
 
 type SideMenuProps = {
-    forwardRef?: ForwardedRef<SideMenuElement>
-    data: MenuType
+    forwardRef: React.ForwardedRef<SideMenuElement>
 }
 export function SideMenu(props: SideMenuProps) {
 
-    const [show, setShow] = useState(false);
-    const [displayAnimate, setDisplayAnimate] = useState(false);
+    const app = useApp();
+    const menu = app.menu;
 
-    const handleContentClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        e.stopPropagation();
-    }
+    const sideModalRef = useRef<SideModalElement>(null);
 
-    const handleShow = () => {
-        setShow(true)
-        setTimeout(() => setDisplayAnimate(true), 100)
-    }
-
-    const handleHide = () => {
-        setDisplayAnimate(false)
-        setTimeout(() => setShow(false), 250)
-    }
+    const handleMenuClick = (index: number) => {
+        document.querySelector(`[data-children="${index}"]`)?.classList.toggle('animate-slide-down');
+    }    
 
     useImperativeHandle(props.forwardRef, () => ({
-        show: () => handleShow(),
+        show: () => sideModalRef.current?.show(),
+        hide: () => sideModalRef.current?.hide()
     }))
     return (
-        <div className={styles.container} onClick={handleHide} style={{
-            display: show ? "flex" : "none",
-        }}>
-            <div className={styles.background} style={{
-            opacity: displayAnimate ? 1 : 0
-        }}>
-                <div className={styles.content} onClick={handleContentClick} style={{
-                    transform: displayAnimate ? "translateX(0)" : "translateX(100%)"
-                }}>
-                    <div className={styles.buttonClose} onClick={handleHide}>
-                        <AiOutlineClose />
-                    </div>
-
-                    <div className={styles.logo}>
-                        <Image src="/NextEcomerceLogo.svg" alt="Next Ecomerce Logo" priority={true} fill />
-                    </div>
-
-                    <div className={styles.menuContainer}>
-                        <Builder mainMenu={false} data={props.data} />
-                    </div>
-
-                    <div className={styles.user}>
-                        <div className={styles.login}>
-                            <h2>Login</h2>
-                            <input className={styles.loginInput} placeholder="your_name@company.com" />
-                            <input type="password" className={styles.loginInput} placeholder="password" />
-                            <div className={styles.loginButton}>Login</div>
-                        </div>
-                    </div>
-
-                </div>
+        <SideModal forwardRef={sideModalRef}>
+            <div className='absolute top-2 z-10'>
+                <ButtonDark/>
             </div>
-        </div>
+            <div className="w-full h-24">
+                <Image src="/NextEcomerceLogo.svg" alt="Next Ecomerce Logo" fill />
+            </div>
+
+            <ul className="text-lg">
+                { menu.map((item, index) => (
+                    <li key={index} className="cursor-pointer" onClick={() => handleMenuClick(index)}>
+                        { item.children ? item.title : <Link href={item.url ?? '#'}>{item.title}</Link>}
+
+                        <div className="animate-slide-up" data-children={index}>
+
+                            <ul className="ml-4">
+                                { item.children && item.children.map((subItem, subIndex) => (
+                                    <li key={subIndex}>{subItem.title}</li>
+                                ))}
+                            </ul>                                            
+                        </div>
+                    </li>
+                ))}
+            </ul>            
+        </SideModal>
     )
 }

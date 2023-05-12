@@ -1,116 +1,72 @@
-import { ForwardedRef, useImperativeHandle, useState } from "react"
-
-import styles from "./Basket.module.css"
-
-import { AiOutlineClose, AiOutlineDelete } from 'react-icons/ai';
-
+import React, { useRef, useImperativeHandle } from 'react';
+import Link from 'next/link';
 import { Image } from '@/Components/Image';
-import { Basket as BasketType } from '@/Components/Basket/@types';
 
-export type BasketElement = {
-    show: () => void
-}
+import { useApp } from '@/hooks/useApp';
+
+import { AiOutlineDelete } from 'react-icons/ai';
+import { IoIosAdd, IoIosRemove } from 'react-icons/io';
+import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+
+import { SideModal, SideModalElement } from '../Modal/SideModal';
+import { Button } from "@/Components/Button";
+
+export type BasketElement = SideModalElement
 
 type BasketProps = {
-    data: BasketType
-    forwardRef?: ForwardedRef<BasketElement>
+    forwardRef: React.ForwardedRef<BasketElement>
 }
 export function Basket(props: BasketProps) {
 
-    const [show, setShow] = useState(false);
-    const [displayAnimate, setDisplayAnimate] = useState(false);
+    const app = useApp();
+    const basket = app.basket;
 
-    const basketTotal = props.data?.items.reduce((total, item) => {
-        return total + (item.price * item.quantity);
-    }, 0);
-
-    const basketVAT = props.data?.items.reduce((total, item) => {
-        return total + ((item.price * item.quantity) * 0.2);
-    }, 0);
-
-    const handleContentClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        e.stopPropagation();
-    }
-
-    const handleShow = () => {
-        setShow(true)
-        setTimeout(() => setDisplayAnimate(true), 100)
-    }
+    const sideModalRef = useRef<SideModalElement>(null);
 
     const handleHide = () => {
-        setDisplayAnimate(false)
-        setTimeout(() => setShow(false), 250)
+        sideModalRef.current?.hide();
+    }
+
+    const handleRemoveItem = () => {
     }
 
     useImperativeHandle(props.forwardRef, () => ({
-        show: () => handleShow(),
+        show: () => sideModalRef.current?.show(),
+        hide: () => sideModalRef.current?.hide()
     }))
     return (
-        <div className={styles.container} onClick={handleHide} style={{
-            display: show ? "flex" : "none",
-        }}>
-            <div className={styles.background} style={{
-            opacity: displayAnimate ? 1 : 0
-        }}>
-                <div className={styles.content} onClick={handleContentClick} style={{
-                    transform: displayAnimate ? "translateX(0)" : "translateX(100%)"
-                }}>
-                    <div className={styles.buttonClose} onClick={handleHide}>
-                        <AiOutlineClose />
+        <SideModal forwardRef={sideModalRef}>
+            { basket.items.map((item, key) => (
+                <div key={key} className="flex justify-between gap-2 text-sm md:text-base overflow-y-scroll">
+                    <div className="relative w-20 h-24 bg-neutral-200/50 rounded-md overflow-hidden">
+                        <Image src={item.image ? item.image : "/Product_Images_Coming_Soon.webp"} alt={item.name} fill />
                     </div>
-                    <div className={styles.basketList}>
-                        
-                        { props.data?.items.map((item, key) => (
-                            <div key={key} className={styles.basketItem}>
-                                <div className={styles.basketItemImg}>
-                                    {
-                                        item.image ?
-                                            <Image src={item.image} alt="product description" fill />
-                                        : 
-                                            <Image src="/Product_Images_Coming_Soon.webp" alt="product description" fill />
-                                    }
-                                </div>
-                                <div className={styles.basketItemInfo}>
-                                    <div className={styles.basketItemName}>
-                                        <strong>{ sanitizeProductTitle(item.title) }</strong>
-                                    </div>
-                                    <div className={styles.basketItemPrice}>£ { item.price.toFixed(2) }</div>
-                                </div>
-                                <div className={styles.basketItemQuantity}>{ item.quantity }</div>
-                                <div className={styles.basketItemRemove}><AiOutlineDelete /></div>
-                            </div>
-                        ))}
-
+                    <div className="flex flex-col flex-1 justify-evenly">
+                        <strong>{ item.name }</strong>
+                        <div className="">&pound; { item.price.toFixed(2) }</div>
                     </div>
-                    <div className={styles.basketResume}>
-                        <div className={styles.basketResumeItem}>
-                            Subtotal:
-                            <span>£ { (Math.round(basketTotal * 100) / 100).toFixed(2) }</span>
-                        </div>
-                        <div className={styles.basketResumeItem}>
-                            VAT:
-                            <span>£ { (Math.round(basketVAT * 100) / 100).toFixed(2) }</span>
-                        </div>
-                        <div className={styles.basketResumeItem}>
-                            Discount:
-                            <span>£ { (Math.round(0 * 100) / 100).toFixed(2) }</span>
-                        </div>
-                        <div className={styles.basketResumeTotal}>
-                            Total:
-                            <span>£ { Math.round((basketTotal + basketVAT) * 100) / 100 }</span>
-                        </div>                    
+                    <div className="flex flex-col w-16 scale-75 justify-center items-center">
+                        <Button Icon={IoIosAdd} action={handleRemoveItem} />
+                            <div className="w-16 text-center">{ item.quantity }</div>
+                            <Button Icon={IoIosRemove} action={handleRemoveItem} />
                     </div>
-                    <div className={styles.basketAction}>
-                        <div className={styles.basketActionButton}>View Basket</div>
-                        <div className={styles.basketActionButton}>Checkout</div>
+                    <div className="flex justify-center items-center">
+                        <Button Icon={AiOutlineDelete} action={handleRemoveItem} />
                     </div>
                 </div>
-            </div>
-        </div>
-    )
-}
+            ))}
 
-function sanitizeProductTitle(title: string) {
-    (title.length > 25) && (title = title.slice(0, 25) + '...');
-    return title.replaceAll('_', ' ');
+            <div className="flex flex-col p-2 gap-2 mt-auto border-t-2 border-t-slate-800">
+                <div className="flex justify-between">
+                    Total:
+                    <span>&pound; { Math.round(basket.total) }</span>
+                </div>                 
+
+                <Button title="Continue Shopping" action={handleHide} className="bg-zinc-900/5 dark:bg-white/5" />
+                <Button Icon={MdOutlineShoppingCartCheckout} action={handleHide} className="bg-green-700 text-white text-3xl">
+                    <span className="text-lg">Checkout</span>
+                </Button>
+            </div> 
+        </SideModal>
+    )
 }

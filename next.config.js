@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  pageExtensions: ['public.tsx', 'public.ts'],
   images: {
-    domains: ['fakestoreapi.com', 'ik.imagekit.io'],
+    domains: ['fakestoreapi.com', 'ik.imagekit.io', 'pisces.bbystatic.com'],
     minimumCacheTTL: 60,
   },
   webpack: (config) => {
