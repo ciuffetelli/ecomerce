@@ -34,6 +34,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       items: [],
       total: 0,
     },
+    favorites: [],
     status: 'failed',
   })
 
@@ -68,5 +69,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
       items: [],
       total: 0,
     },    
+    favorites: [],
   })
 }
